@@ -1,0 +1,64 @@
+.setting-form {
+  width: 500px;
+  margin-top: 90px;
+
+  .form-item {
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+  }
+
+  .form-item-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, .8);
+  }
+
+  .form-item-desc {
+    margin-top: 8px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .2);
+  }
+
+  .form-item-control {
+    margin-top: 12px;
+  }
+
+  .form-item-error {
+    height: 16px;
+    margin-top: 4px;
+    font-size: 14px;
+    color: #f00;
+  }
+
+  .input, .textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #c9c9c9;
+
+    &:focus {
+      border-color: #000;
+    }
+  }
+
+  .input {
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  .textarea {
+    padding: 12px;
+  }
+
+  .input-ctrl-greeting {
+    height: 100px;
+  }
+
+  .input-ctrl-desc {
+    height: 180px;
+  }
+}
+
+.actions {
+  margin-top: 24px;
+}

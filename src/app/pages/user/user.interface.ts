@@ -3,5 +3,6 @@ export enum LoginStep {
   LOGIN = 'login',
   REGISTER = 'register',
   CONGRATULATION = 'congratulation',
-  SETTING = 'setting'
+  SETTING = 'setting',
+  RESET = 'reset'
 }

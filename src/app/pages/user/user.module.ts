@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { CongratulationComponent } from './congratulation/congratulation.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './reset/reset.component';
 import { SettingComponent } from './setting/setting.component';
+import { UserLayoutComponent } from './user-layout/user-layout.component';
 import { UserRoutingModule } from './user-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { UserLayoutComponent } from './user-layout/user-layout.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UserLayoutComponent } from './user-layout/user-layout.component';
     WelcomeComponent,
     CongratulationComponent,
     SettingComponent,
-    UserLayoutComponent
+    UserLayoutComponent,
+    ResetComponent
   ],
   imports: [CommonModule, UserRoutingModule]
 })

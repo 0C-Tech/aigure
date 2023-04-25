@@ -5,11 +5,11 @@ import { LoginStep } from '../user.interface';
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.component.html',
-  styleUrls: ['../user.less', './setting.component.less']
+  selector: 'app-reset',
+  templateUrl: './reset.component.html',
+  styleUrls: ['../user.less', './reset.component.less']
 })
-export class SettingComponent implements OnInit {
+export class ResetComponent implements OnInit {
   constructor(
     private destroy$: DestroyService,
     private router: Router,
@@ -18,10 +18,10 @@ export class SettingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.updateStep(LoginStep.SETTING);
+    this.userService.updateStep(LoginStep.RESET);
   }
 
-  createAccount() {
+  resetPassword() {
 
   }
 }
