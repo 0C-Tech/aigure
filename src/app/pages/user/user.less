@@ -1,0 +1,58 @@
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+
+  .action-item:not(:first-child) {
+    margin-top: 16px;
+  }
+
+  .button {
+    display: block;
+    height: 56px;
+    padding: 0 40px;
+    line-height: 56px;
+    border-radius: 28px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button-bg {
+    background: #000;
+    color: #fff;
+    font-size: 18px;
+
+    &:hover {
+      background: #424141;
+    }
+  }
+
+  .button-text {
+    font-size: 16px;
+    color: #000;
+  }
+}
+
+.user-form {
+  margin-top: 48px;
+
+  .form-item {
+    &:not(:last-child) {
+      margin-bottom: 36px;
+    }
+  }
+
+  .input {
+    width: 320px;
+    padding: 12px 0;
+    line-height: 30px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .6);
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+}

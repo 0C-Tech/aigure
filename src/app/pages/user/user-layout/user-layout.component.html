@@ -1,0 +1,10 @@
+<div class="welcome">
+  <div class="logo">
+    <img src="/assets/images/logo.png" alt="Logo"/>
+  </div>
+  <div class="desc" *ngIf="loginStep === 'welcome' || loginStep === 'login'">
+    <div class="avatar"><img src="/assets/images/robot.png" alt="Robot avatar"/></div>
+    <div class="slogan">Your Personal AI Friend</div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

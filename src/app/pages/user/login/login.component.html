@@ -1,1 +1,12 @@
-<p>login works!</p>
+<div class="user-form">
+  <div class="form-item"><input class="input" placeholder="Email" /></div>
+  <div class="form-item"><input class="input" placeholder="Password" /></div>
+</div>
+<div class="actions">
+  <div class="action-item">
+    <a class="button button-bg" (click)="login()">Login</a>
+  </div>
+  <div class="action-item">
+    <a class="button button-text" routerLink="/user/reset-password">Forgot Password?</a>
+  </div>
+</div>

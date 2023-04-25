@@ -1,21 +1,12 @@
-<div class='welcome'>
-  <div class='logo'>
-    <img src='/assets/images/logo.png' alt='Logo'/>
+<div class="third-party">
+  <div><img src="/assets/images/google.png" alt="Google"/></div>
+  <div><img src="/assets/images/facebook.png" alt="Facebook"/></div>
+</div>
+<div class="actions">
+  <div class="action-item">
+    <a class="button button-bg" (click)="login()">Continue with Email</a>
   </div>
-  <div class='desc'>
-    <div class='avatar'><img src='/assets/images/robot.png' alt='Robot avatar'/></div>
-    <div class='slogan'>Your Personal AI Friend</div>
-  </div>
-  <div class='third-party'>
-    <div><img src='/assets/images/google.png' alt='Google'/></div>
-    <div><img src='/assets/images/facebook.png' alt='Facebook'/></div>
-  </div>
-  <div class='actions'>
-    <div class='login'>
-      <a (click)='login()'>Continue with Email</a>
-    </div>
-    <div class='register'>
-      <a routerLink='/user/register'>Create Account with Email</a>
-    </div>
+  <div class="action-item">
+    <a class="button button-text" routerLink="/user/register">Create Account with Email</a>
   </div>
 </div>

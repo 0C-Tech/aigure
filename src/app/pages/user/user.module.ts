@@ -6,9 +6,17 @@ import { RegisterComponent } from './register/register.component';
 import { SettingComponent } from './setting/setting.component';
 import { UserRoutingModule } from './user-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { UserLayoutComponent } from './user-layout/user-layout.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, WelcomeComponent, CongratulationComponent, SettingComponent],
+  declarations: [
+    RegisterComponent,
+    LoginComponent,
+    WelcomeComponent,
+    CongratulationComponent,
+    SettingComponent,
+    UserLayoutComponent
+  ],
   imports: [CommonModule, UserRoutingModule]
 })
 export class UserModule {}
