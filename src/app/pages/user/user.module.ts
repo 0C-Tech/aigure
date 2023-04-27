@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CongratulationComponent } from './congratulation/congratulation.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -19,6 +20,6 @@ import { WelcomeComponent } from './welcome/welcome.component';
     UserLayoutComponent,
     ResetComponent
   ],
-  imports: [CommonModule, UserRoutingModule]
+  imports: [CommonModule, UserRoutingModule, FormsModule, ReactiveFormsModule]
 })
 export class UserModule {}

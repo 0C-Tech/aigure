@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { catchError, EMPTY, map, Observable, of } from 'rxjs';
+import { MessageService } from '../components/message/message.service';
 import { ApiUrl } from '../config/api-url';
 import { Message } from '../config/message.enum';
 import { HttpResponseEntity } from './http-response.interface';
@@ -13,7 +13,7 @@ import { HttpResponseEntity } from './http-response.interface';
 export class ApiService {
   private apiUrlPrefix: string = ApiUrl.API_URL_PREFIX;
 
-  constructor(private http: HttpClient, private router: Router, private message: NzMessageService) {}
+  constructor(private http: HttpClient, private router: Router, private message: MessageService) {}
 
   getApiUrl(path: string): string {
     return `${this.apiUrlPrefix}${path}`;

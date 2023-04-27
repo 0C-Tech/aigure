@@ -1,6 +1,6 @@
 const PROXY_CONFIG = {
   '/api': {
-    'target': 'http://47.251.6.24/',
+    'target': 'http://bot.aigure.com/',
     'secure': false,
     'changeOrigin': true,
     'logLevel': 'debug'

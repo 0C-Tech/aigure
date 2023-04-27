@@ -1,29 +1,47 @@
-<div class="setting-form">
-  <div class="form-item">
-    <div class="form-item-label">Name</div>
-    <div class="form-item-desc">The name can include first and last names.</div>
-    <div class="form-item-control"><input class="input" placeholder="Name" /></div>
-    <div class="form-item-error"></div>
-  </div>
-  <div class="form-item">
-    <div class="form-item-label">Greeting</div>
-    <div class="form-item-desc">What would say to start a conversation?</div>
-    <div class="form-item-control">
-      <textarea class="textarea input-ctrl-greeting" placeholder="Greeting"></textarea>
+<form class="login-form" [formGroup]="settingForm" (ngSubmit)="saveBot()">
+  <div class="setting-form">
+    <div class="form-item">
+      <div class="form-item-label">Name</div>
+      <div class="form-item-desc">The name can include first and last names.</div>
+      <div class="form-item-control">
+        <input type="text" class="input" formControlName="name"
+               maxlength="40" autocomplete="off" placeholder="Name" />
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="settingForm.get('name')?.dirty">
+          <span *ngIf="settingForm.get('name')?.errors?.['required']">请输入名称</span>
+        </ng-container>
+      </div>
     </div>
-    <div class="form-item-error"></div>
-  </div>
-  <div class="form-item">
-    <div class="form-item-label">Description</div>
-    <div class="form-item-desc">In a few sentences, how would describe themselves?</div>
-    <div class="form-item-control">
-      <textarea class="textarea input-ctrl-desc" placeholder="Description"></textarea>
+    <div class="form-item">
+      <div class="form-item-label">Greeting</div>
+      <div class="form-item-desc">What would say to start a conversation?</div>
+      <div class="form-item-control">
+      <textarea class="textarea input-ctrl-greeting" formControlName="greeting"
+                maxlength="1000" placeholder="Greeting"></textarea>
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="settingForm.get('greeting')?.dirty">
+          <span *ngIf="settingForm.get('greeting')?.errors?.['required']">请输入问候语</span>
+        </ng-container>
+      </div>
     </div>
-    <div class="form-item-error"></div>
+    <div class="form-item">
+      <div class="form-item-label">Description</div>
+      <div class="form-item-desc">In a few sentences, how would describe themselves?</div>
+      <div class="form-item-control">
+      <textarea class="textarea input-ctrl-desc" formControlName="description"
+                maxlength="1000" placeholder="Description"></textarea>
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="settingForm.get('description')?.dirty">
+        </ng-container>
+      </div>
+    </div>
   </div>
-</div>
-<div class="actions">
-  <div class="action-item">
-    <a class="button button-bg" (click)="createAccount()">Create your aigure</a>
+  <div class="actions">
+    <div class="action-item">
+      <a class="button button-bg" (click)="saveBot()">Create your aigure</a>
+    </div>
   </div>
-</div>
+</form>

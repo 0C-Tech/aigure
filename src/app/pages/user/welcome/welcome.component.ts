@@ -19,7 +19,9 @@ export class WelcomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.updateStep(LoginStep.WELCOME);
+    setTimeout(() => {
+      this.userService.updateStep(LoginStep.WELCOME);
+    }, 0);
   }
 
   login() {

@@ -1,12 +1,35 @@
-<div class="user-form">
-  <div class="form-item"><input class="input" placeholder="Email" /></div>
-  <div class="form-item"><input class="input" placeholder="Password" /></div>
-</div>
-<div class="actions">
-  <div class="action-item">
-    <a class="button button-bg" (click)="login()">Login</a>
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+  <div class="user-form">
+    <div class="form-item">
+      <div class="form-item-control">
+        <input type="text" class="input" formControlName="email"
+               maxlength="100" autocomplete="off" placeholder="Email" />
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="loginForm.get('email')?.dirty">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">请输入邮箱</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">邮箱格式不正确</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-control">
+        <input type="password" class="input" formControlName="password"
+               maxlength="20" placeholder="Password" />
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="loginForm.get('password')?.dirty">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">请输入密码</span>
+        </ng-container>
+      </div>
+    </div>
   </div>
-  <div class="action-item">
-    <a class="button button-text" routerLink="/user/reset-password">Forgot Password?</a>
+  <div class="actions">
+    <div class="action-item">
+      <a class="button button-bg" (click)="login()">Login</a>
+    </div>
+    <div class="action-item">
+      <a class="button button-text" routerLink="/user/reset-password">Forgot Password?</a>
+    </div>
   </div>
-</div>
+</form>

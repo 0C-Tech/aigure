@@ -1,10 +1,33 @@
 <div class="reset-desc">Reset password</div>
-<div class="user-form">
-  <div class="form-item"><input class="input" placeholder="New Password" /></div>
-  <div class="form-item"><input class="input" placeholder="Verify Password" /></div>
-</div>
-<div class="actions">
-  <div class="action-item">
-    <a class="button button-bg" (click)="resetPassword()">Login</a>
+<form class="login-form" [formGroup]="resetForm" (ngSubmit)="resetPassword()">
+  <div class="user-form">
+    <div class="form-item">
+      <div class="form-item-control">
+        <input type="password" class="input" formControlName="password"
+               maxlength="20" placeholder="Password" />
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="resetForm.get('password')?.dirty">
+          <span *ngIf="resetForm.get('password')?.errors?.['required']">请输入密码</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-control">
+        <input type="password" class="input" formControlName="repeatPassword"
+               maxlength="20" placeholder="Repeat Password" />
+      </div>
+      <div class="form-item-error">
+        <ng-container *ngIf="resetForm.get('repeatPassword')?.dirty">
+          <span *ngIf="resetForm.get('repeatPassword')?.errors?.['required']">请再一次输入密码</span>
+          <span *ngIf="resetForm.value.repeatPassword && resetForm.errors?.['confirmPwd'].invalid">两次密码输入不一致</span>
+        </ng-container>
+      </div>
+    </div>
   </div>
-</div>
+  <div class="actions">
+    <div class="action-item">
+      <a class="button button-bg" (click)="resetPassword()">Reset</a>
+    </div>
+  </div>
+</form>
