@@ -23,4 +23,10 @@ export class BotService {
       .httpPost(this.apiService.getApiUrl(ApiUrl.SEND_MESSAGE_WITH_HISTORY), param)
       .pipe(map((res) => <any>(res || {})));
   }
+
+  getMessageList(): Observable<ChatGPTResponse[]> {
+    return this.apiService
+      .httpGet(this.apiService.getApiUrl(ApiUrl.GET_MESSAGE_LIST))
+      .pipe(map((res) => <any>(res?.data || [])));
+  }
 }

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { ApiUrl } from '../../config/api-url';
+import { URL_AVATAR_API } from '../../config/common.constant';
 import { ApiService } from '../../core/api.service';
 import { HttpResponseEntity } from '../../core/http-response.interface';
+import md5 from '../../helpers/md5';
+import { format } from '../../helpers/util';
 import { BotInfo, LoginStep, User } from './user.interface';
 
 @Injectable({
@@ -60,6 +63,14 @@ export class UserService {
     }
   }
 
+  getCacheUser(): Partial<User> {
+    try {
+      return JSON.parse(localStorage.getItem('user') || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
   getUserInfo(email: string): Observable<User> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER), {
@@ -80,9 +91,14 @@ export class UserService {
       .pipe(map((res) => <any>(res || {})));
   }
 
-  saveBot(bot: Partial<BotInfo>) {
+  saveBot(bot: Partial<BotInfo>): Observable<HttpResponseEntity> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_USER), bot)
-      .pipe(map((res) => <any>(res?.data || {})));
+      .pipe(map((res) => <any>(res || {})));
+  }
+
+  getUserAvatar(email: string): string {
+    const hash = md5(email);
+    return format(URL_AVATAR_API, hash, 'monsterid');
   }
 }

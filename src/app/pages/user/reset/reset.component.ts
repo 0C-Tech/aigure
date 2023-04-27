@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../components/message/message.service';
 import { DestroyService } from '../../../core/destroy.service';
 import { PageComponent } from '../../../core/page.component';
-import { LoginStep, User } from '../user.interface';
+import { LoginStep } from '../user.interface';
 import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-reset',
   templateUrl: './reset.component.html',
-  styleUrls: ['../user.less', './reset.component.less']
+  styleUrls: ['../user.less', './reset.component.less'],
+  providers: [DestroyService]
 })
 export class ResetComponent extends PageComponent implements OnInit {
   resetForm = this.fb.group({
@@ -54,7 +55,7 @@ export class ResetComponent extends PageComponent implements OnInit {
       const { password } = value;
       let id: number;
       try {
-        const user: User = JSON.parse(localStorage.getItem('user') || '{}');
+        const user = this.userService.getCacheUser();
         id = user.id || 0;
       } catch (e) {
         id = 0;

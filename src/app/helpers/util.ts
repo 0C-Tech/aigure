@@ -25,15 +25,22 @@ export function textPosition(inputEle: HTMLInputElement, text: string, isSelecte
   };
 }
 
-export function movePosition(inputEle: HTMLInputElement, start: number, offset: number, isSelected: boolean) {
-  start = start || 0;
-  offset = offset === undefined ? -1 : offset;
-
-  inputEle.focus();
-  if (isSelected) {
-    inputEle.selectionStart = start;
-  } else {
-    inputEle.selectionStart = start + offset;
+/**
+ * 格式化字符串
+ * e.g. input: format('Hello $0, $1.', 'World', 'Fuyun')
+ *      output: Hello World, Fuyun.
+ *   or input: format('Hello $0, $1.', ['World', 'Fuyun'])
+ *      output the same: Hello World, Fuyun.
+ * Notice:
+ *     When replacement is not supplied or is undefined,
+ *     it will be replaced with empty string('')
+ * @param {string} str source string
+ * @param {(string | number)[]} params replacements
+ * @return {string} output string
+ */
+export function format(str: string, ...params: (string | number)[]): string {
+  if (Array.isArray(params[0])) {
+    params = params[0];
   }
-  inputEle.selectionEnd = start + offset;
+  return str.replace(/\$(\d+)/gi, (matched, index) => (params[index] && params[index].toString()) || '');
 }

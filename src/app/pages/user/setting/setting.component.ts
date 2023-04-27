@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from '../../../components/message/message.service';
 import { DestroyService } from '../../../core/destroy.service';
 import { PageComponent } from '../../../core/page.component';
 import { LoginStep } from '../user.interface';
@@ -9,7 +10,8 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
-  styleUrls: ['../user.less', './setting.component.less']
+  styleUrls: ['../user.less', './setting.component.less'],
+  providers: [DestroyService]
 })
 export class SettingComponent extends PageComponent implements OnInit {
   settingForm = this.fb.group({
@@ -23,6 +25,7 @@ export class SettingComponent extends PageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
+    private message: MessageService,
     private userService: UserService
   ) {
     super();
@@ -41,8 +44,10 @@ export class SettingComponent extends PageComponent implements OnInit {
         greeting,
         description
       }).subscribe((res) => {
-        if (res) {
+        if (res.success) {
           this.router.navigate(['/bot/chat']);
+        } else {
+          this.message.error('保存失败');
         }
       });
     }

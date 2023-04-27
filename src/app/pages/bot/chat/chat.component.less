@@ -98,6 +98,7 @@
           img {
             width: 40px;
             height: 40px;
+            border-radius: 50%;
           }
         }
 
@@ -191,16 +192,18 @@
             font-size: 16px;
           }
 
-          .icon-send {
+          .send-icon {
             position: absolute;
             top: 17px;
             right: 16px;
             width: 20px;
             height: 20px;
             background: url("/assets/images/send-disable.png") center no-repeat;
+            cursor: not-allowed;
 
             &.active {
               background: url("/assets/images/send-enable.png") center no-repeat;
+              cursor: pointer;
             }
           }
         }
@@ -211,6 +214,7 @@
           img {
             width: 40px;
             height: 40px;
+            border-radius: 50%;
           }
         }
       }

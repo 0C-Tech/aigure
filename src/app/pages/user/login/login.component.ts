@@ -10,7 +10,8 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../user.less', './login.component.less']
+  styleUrls: ['../user.less', './login.component.less'],
+  providers: [DestroyService]
 })
 export class LoginComponent extends PageComponent implements OnInit {
   loginForm = this.fb.group({
