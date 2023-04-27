@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
   providers: [DestroyService]
 })
 export class UserLayoutComponent implements OnInit {
-  loginStep = LoginStep.WELCOME;
+  loginStep: LoginStep | void = LoginStep.WELCOME;
 
   constructor(private destroy$: DestroyService, private userService: UserService) {}
 

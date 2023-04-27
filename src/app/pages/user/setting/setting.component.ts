@@ -22,6 +22,6 @@ export class SettingComponent implements OnInit {
   }
 
   createAccount() {
-
+    this.router.navigate(['/bot/chat']);
   }
 }

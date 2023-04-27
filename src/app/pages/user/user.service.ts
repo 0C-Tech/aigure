@@ -6,8 +6,8 @@ import { LoginStep } from './user.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private step: BehaviorSubject<LoginStep> = new BehaviorSubject<LoginStep>(LoginStep.WELCOME);
-  public step$: Observable<LoginStep> = this.step.asObservable();
+  private step: BehaviorSubject<LoginStep | void> = new BehaviorSubject<LoginStep | void>(void 0);
+  public step$: Observable<LoginStep | void> = this.step.asObservable();
 
   updateStep(step: LoginStep) {
     this.step.next(step);
