@@ -1,5 +1,5 @@
-<form class="login-form" [formGroup]="settingForm" (ngSubmit)="saveBot()">
-  <div class="setting-form">
+<form [formGroup]="settingForm" (ngSubmit)="saveBot()">
+  <div class="setting-form" [class.is-page]="isPage">
     <div class="form-item">
       <div class="form-item-label">Name</div>
       <div class="form-item-desc">The name can include first and last names.</div>
@@ -41,7 +41,7 @@
   </div>
   <div class="actions">
     <div class="action-item">
-      <a class="button button-bg" (click)="saveBot()">Create your aigure</a>
+      <a class="button button-bg" (click)="saveBot()">{{isPage ? 'Create your aigure' : 'Save'}}</a>
     </div>
   </div>
 </form>

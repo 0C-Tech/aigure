@@ -2,7 +2,7 @@
   <div class="bot-header">
     <div class="bot-logo"><img src="/assets/images/logo-dark.png" alt="Logo" /></div>
     <div class="bot-header-actions">
-      <div class="action-item">Bot 设置</div>
+      <div class="action-item" (click)="openSetting()">Bot 设置</div>
       <div class="action-item">Logout</div>
     </div>
   </div>
@@ -35,7 +35,7 @@
           <ng-container *ngIf="!msg.isRobot">
             <div class="message-avatar"><img [src]="userAvatar" alt="avatar" /></div>
             <div class="message-body">
-              <div class="message-user">{{user?.email}}</div>
+              <div class="message-user">{{user.email}}</div>
               <div class="message-content">
                 <div class="message-text">
                   <pre><span>{{msg.content}}</span></pre>
@@ -59,3 +59,4 @@
     </div>
   </div>
 </div>
+<app-setting-modal [(visible)]="settingVisible"></app-setting-modal>

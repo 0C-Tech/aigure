@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from '../../../components/message/message.service';
@@ -14,6 +14,8 @@ import { UserService } from '../user.service';
   providers: [DestroyService]
 })
 export class SettingComponent extends PageComponent implements OnInit {
+  @Input() isPage = true;
+
   settingForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(40)]],
     greeting: [null, [Validators.required, Validators.maxLength(1000)]],

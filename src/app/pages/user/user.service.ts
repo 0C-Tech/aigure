@@ -93,7 +93,7 @@ export class UserService {
 
   saveBot(bot: Partial<BotInfo>): Observable<HttpResponseEntity> {
     return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_USER), bot)
+      .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_BOT), bot)
       .pipe(map((res) => <any>(res || {})));
   }
 

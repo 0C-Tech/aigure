@@ -1,0 +1,11 @@
+<app-modal [content]="modalTpl"
+           [(visible)]="visible"
+           (visibleChange)="changeVisible($event)"
+           [loading]="loading"
+           [showClose]="true">
+  <ng-template #modalTpl>
+    <div class="modal-setting">
+      <app-setting [isPage]="false"></app-setting>
+    </div>
+  </ng-template>
+</app-modal>

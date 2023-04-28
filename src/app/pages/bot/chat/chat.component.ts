@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   userAvatar = '';
   user!: Partial<User>;
+  settingVisible = false;
 
   private inputFlag = false;
 
@@ -104,6 +105,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
         }
       }
     }
+  }
+
+  openSetting() {
+    this.settingVisible = true;
   }
 
   protected scrollBottom() {
