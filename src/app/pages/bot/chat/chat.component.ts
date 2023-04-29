@@ -125,7 +125,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   private getMessageList() {
     this.botService.getMessageList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
-
+      this.messages = res;
     });
   }
 

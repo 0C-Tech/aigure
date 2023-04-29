@@ -4,7 +4,7 @@ import { ApiUrl } from '../../config/api-url';
 import { ApiService } from '../../core/api.service';
 import { HttpResponseEntity } from '../../core/http-response.interface';
 import { BotInfo } from '../user/user.interface';
-import { ChatGPTParam, ChatGPTResponse } from './bot.interface';
+import { ChatGPTParam, ChatGPTResponse, ChatMessage } from './bot.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class BotService {
   sendMessageWithHistory(param: ChatGPTParam): Observable<ChatGPTResponse> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.SEND_MESSAGE_WITH_HISTORY), param)
-      .pipe(map((res) => <any>(res || {})));
+      .pipe(map((res) => <any>(res?.data || {})));
   }
 
   saveBot(bot: Partial<BotInfo>): Observable<HttpResponseEntity> {
@@ -46,7 +46,7 @@ export class BotService {
       .pipe(map((res) => <any>(res || {})));
   }
 
-  getMessageList(): Observable<ChatGPTResponse[]> {
+  getMessageList(): Observable<ChatMessage[]> {
     return this.apiService
       .httpGet(this.apiService.getApiUrl(ApiUrl.GET_MESSAGE_LIST))
       .pipe(map((res) => <any>(res?.data || [])));
