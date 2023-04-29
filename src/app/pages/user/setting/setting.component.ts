@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil } from 'rxjs';
 import { MessageService } from '../../../components/message/message.service';
 import { DestroyService } from '../../../core/destroy.service';
 import { PageComponent } from '../../../core/page.component';
-import { LoginStep } from '../user.interface';
+import { BotService } from '../../bot/bot.service';
+import { BotInfo, LoginStep } from '../user.interface';
 import { UserService } from '../user.service';
 
 @Component({
@@ -17,10 +19,11 @@ export class SettingComponent extends PageComponent implements OnInit {
   @Input() isPage = true;
   @Input() botId: string | number = '';
 
+  botInfo?: BotInfo;
   settingForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(40)]],
-    greeting: [null, [Validators.required, Validators.maxLength(1000)]],
-    description: [null, [Validators.maxLength(1000)]]
+    greeting: ['', [Validators.required, Validators.maxLength(1000)]],
+    description: ['', [Validators.maxLength(1000)]]
   });
 
   constructor(
@@ -29,7 +32,8 @@ export class SettingComponent extends PageComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private message: MessageService,
-    private userService: UserService
+    private userService: UserService,
+    private botService: BotService
   ) {
     super();
   }
@@ -38,17 +42,24 @@ export class SettingComponent extends PageComponent implements OnInit {
     setTimeout(() => {
       this.userService.updateStep(LoginStep.SETTING);
     }, 0);
+    if (this.botId) {
+      this.getBotInfo();
+    }
   }
 
   saveBot() {
     const { value, valid } = this.validateForm(this.settingForm);
     if (valid) {
       const { name, greeting, description } = value;
-      this.userService.saveBot({
+      const payload: Record<string, any> = {
         displayName: name,
         greeting,
         description
-      }).subscribe((res) => {
+      };
+      if (this.botId) {
+        payload['id'] = this.botId;
+      }
+      this.botService.saveBot(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
         if (res.success) {
           this.router.navigate(['/bot/chat']);
         } else {
@@ -56,5 +67,20 @@ export class SettingComponent extends PageComponent implements OnInit {
         }
       });
     }
+  }
+
+  private getBotInfo() {
+    this.botService.getBotInfo(this.botId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      if (res.success) {
+        this.botInfo = res.data;
+        this.settingForm.setValue({
+          name: this.botInfo?.displayName || '',
+          greeting: this.botInfo?.greeting || '',
+          description: this.botInfo?.description || ''
+        });
+      } else {
+        this.message.error('获取Bot信息失败');
+      }
+    });
   }
 }

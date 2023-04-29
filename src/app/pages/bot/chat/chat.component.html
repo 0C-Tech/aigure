@@ -9,7 +9,7 @@
   <div class="bot-body">
     <div class="bot-sider">
       <div class="bot-avatar"><img src="/assets/images/robot.png" alt="Robot avatar" /></div>
-      <div class="bot-name">Hilda Hansen</div>
+      <div class="bot-name">{{botInfo?.displayName}}</div>
       <div></div>
     </div>
     <div class="bot-content">
@@ -18,7 +18,7 @@
           <ng-container *ngIf="msg.isRobot">
             <div class="message-avatar"><img src="/assets/images/robot.png" alt="Robot avatar" /></div>
             <div class="message-body">
-              <div class="message-user">Hilda Hansen</div>
+              <div class="message-user">{{botInfo?.displayName}}</div>
               <div class="message-content">
                 <div class="message-text" [innerHTML]="msg.content | safeHtml"></div>
                 <div class="message-actions">

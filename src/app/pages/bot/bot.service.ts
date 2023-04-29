@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiUrl } from '../../config/api-url';
 import { ApiService } from '../../core/api.service';
+import { HttpResponseEntity } from '../../core/http-response.interface';
+import { BotInfo } from '../user/user.interface';
 import { ChatGPTParam, ChatGPTResponse } from './bot.interface';
 
 @Injectable({
@@ -21,6 +23,26 @@ export class BotService {
   sendMessageWithHistory(param: ChatGPTParam): Observable<ChatGPTResponse> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.SEND_MESSAGE_WITH_HISTORY), param)
+      .pipe(map((res) => <any>(res || {})));
+  }
+
+  saveBot(bot: Partial<BotInfo>): Observable<HttpResponseEntity> {
+    return this.apiService
+      .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_BOT), bot)
+      .pipe(map((res) => <any>(res || {})));
+  }
+
+  getBotList(): Observable<HttpResponseEntity> {
+    return this.apiService
+      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_BOT_LIST))
+      .pipe(map((res) => <any>(res || {})));
+  }
+
+  getBotInfo(botId: string | number): Observable<HttpResponseEntity> {
+    return this.apiService
+      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_BOT_INFO), {
+        id: botId
+      })
       .pipe(map((res) => <any>(res || {})));
   }
 

@@ -6,7 +6,7 @@ import { ApiService } from '../../core/api.service';
 import { HttpResponseEntity } from '../../core/http-response.interface';
 import md5 from '../../helpers/md5';
 import { format } from '../../helpers/util';
-import { BotInfo, LoginStep, User } from './user.interface';
+import { LoginStep, User } from './user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -94,12 +94,6 @@ export class UserService {
   saveUserInfo(user: Partial<User>): Observable<HttpResponseEntity> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_USER), user)
-      .pipe(map((res) => <any>(res || {})));
-  }
-
-  saveBot(bot: Partial<BotInfo>): Observable<HttpResponseEntity> {
-    return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.SAVE_BOT), bot)
       .pipe(map((res) => <any>(res || {})));
   }
 

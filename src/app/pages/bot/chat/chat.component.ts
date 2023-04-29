@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs';
 import { MessageService } from '../../../components/message/message.service';
 import { DestroyService } from '../../../core/destroy.service';
 import { textPosition } from '../../../helpers/util';
@@ -39,6 +40,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.user = this.userService.getCacheUser();
     this.userAvatar = this.userService.getUserAvatar(this.user.email || 'default');
+    this.getBotList();
     this.getMessageList();
   }
 
@@ -122,8 +124,21 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   private getMessageList() {
-    this.botService.getMessageList().subscribe((res) => {
+    this.botService.getMessageList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
 
     });
+  }
+
+  private getBotList() {
+    this.botService.getBotList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      if (res.success) {
+        const botList: BotInfo[] = res.data || [];
+        if (botList.length > 0) {
+          this.botInfo = botList[0];
+        }
+      } else {
+        this.message.error('获取Bot信息失败');
+      }
+    })
   }
 }
