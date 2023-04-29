@@ -41,7 +41,7 @@ export class LoginComponent extends PageComponent implements OnInit {
       const { email, password } = value;
       this.userService.login(email, password).subscribe((res) => {
         if (res) {
-          this.getUserInfo(email);
+          this.getUserInfo();
         } else {
           this.message.error('登录失败');
         }
@@ -49,9 +49,13 @@ export class LoginComponent extends PageComponent implements OnInit {
     }
   }
 
-  private getUserInfo(email: string) {
-    this.userService.getUserInfo(email).subscribe(() => {
-      this.router.navigate(['/bot/chat']);
+  private getUserInfo() {
+    this.userService.getUserInfo().subscribe((user) => {
+      if (user.email) {
+        this.router.navigate(['/bot/chat']);
+      } else {
+        this.message.error('用户信息获取失败');
+      }
     });
   }
 }

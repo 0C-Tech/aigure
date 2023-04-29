@@ -32,7 +32,9 @@ export class UserService {
       })
       .pipe(
         map((res) => <any>(res?.data || '')),
-        tap((res) => this.setAuth(res))
+        tap((res) => {
+          this.setAuth(res);
+        })
       );
   }
 
@@ -42,6 +44,9 @@ export class UserService {
     }
   }
 
+  logout() {
+  }
+
   register(user: Partial<User>): Observable<User> {
     return this.apiService
       .httpPost(this.apiService.getApiUrl(ApiUrl.REGISTER), user)
@@ -49,15 +54,16 @@ export class UserService {
         map((res) => <any>(res?.data || {})),
         tap((res) => {
           this.cacheUser(res);
-          this.loginUser.next(res);
+          if (res.id) {
+            this.loginUser.next(res);
+          }
         })
       );
   }
 
   cacheUser(user: Partial<User>) {
-    if (user.id) {
+    if (user.email) {
       localStorage.setItem('user', JSON.stringify({
-        id: user.id,
         email: user.email
       }));
     }
@@ -71,16 +77,16 @@ export class UserService {
     }
   }
 
-  getUserInfo(email: string): Observable<User> {
+  getUserInfo(): Observable<User> {
     return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER), {
-        email
-      })
+      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER))
       .pipe(
         map((res) => <any>(res?.data || {})),
         tap((res) => {
           this.cacheUser(res);
-          this.loginUser.next(res);
+          if (res.email) {
+            this.loginUser.next(res);
+          }
         })
       );
   }

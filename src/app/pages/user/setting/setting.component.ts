@@ -15,6 +15,7 @@ import { UserService } from '../user.service';
 })
 export class SettingComponent extends PageComponent implements OnInit {
   @Input() isPage = true;
+  @Input() botId: string | number = '';
 
   settingForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(40)]],
@@ -34,7 +35,9 @@ export class SettingComponent extends PageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.updateStep(LoginStep.SETTING);
+    setTimeout(() => {
+      this.userService.updateStep(LoginStep.SETTING);
+    }, 0);
   }
 
   saveBot() {

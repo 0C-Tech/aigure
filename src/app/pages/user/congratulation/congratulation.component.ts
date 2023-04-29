@@ -13,6 +13,8 @@ export class CongratulationComponent implements OnInit {
   constructor(private destroy$: DestroyService, private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.updateStep(LoginStep.CONGRATULATION);
+    setTimeout(() => {
+      this.userService.updateStep(LoginStep.CONGRATULATION);
+    }, 0);
   }
 }

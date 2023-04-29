@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from '../guards/auth.guard';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'bot',
+    canMatch: [authGuard],
     loadChildren: () => import('./bot/bot.module').then((m) => m.BotModule)
   }
 ];

@@ -11,10 +11,8 @@ export interface User {
   id?: number;
   displayName?: string;
   email: string;
-  type?: string;
   password?: string;
-  created?: Date;
-  modified?: Date;
+  token?: string;
 }
 
 export interface BotInfo {

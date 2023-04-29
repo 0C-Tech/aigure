@@ -6,8 +6,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./setting-modal.component.less']
 })
 export class SettingModalComponent {
+  @Input() botId: string | number = '';
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+
   loading = false;
 
   changeVisible(visible: boolean) {

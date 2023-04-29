@@ -43,7 +43,9 @@ export class RegisterComponent extends PageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.updateStep(LoginStep.REGISTER);
+    setTimeout(() => {
+      this.userService.updateStep(LoginStep.REGISTER);
+    }, 0);
   }
 
   register() {

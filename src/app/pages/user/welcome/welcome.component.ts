@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DestroyService } from '../../../core/destroy.service';
-import { LoginStep } from '../user.interface';
+import { LoginStep, User } from '../user.interface';
 import { UserService } from '../user.service';
 
 @Component({
@@ -11,6 +11,9 @@ import { UserService } from '../user.service';
   providers: [DestroyService]
 })
 export class WelcomeComponent implements OnInit {
+  user!: User;
+  isLoggedIn = false;
+
   constructor(
     private destroy$: DestroyService,
     private router: Router,
@@ -22,9 +25,17 @@ export class WelcomeComponent implements OnInit {
     setTimeout(() => {
       this.userService.updateStep(LoginStep.WELCOME);
     }, 0);
+    this.userService.loginUser$.subscribe((user) => {
+      this.user = user;
+      this.isLoggedIn = !!user.email;
+    });
   }
 
   login() {
-    this.router.navigate(['../login'], { relativeTo: this.route });
+    if (this.isLoggedIn) {
+      this.router.navigate(['/bot/chat']);
+    } else {
+      this.router.navigate(['../login'], { relativeTo: this.route });
+    }
   }
 }

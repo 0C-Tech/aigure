@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from '../../../components/message/message.service';
 import { DestroyService } from '../../../core/destroy.service';
 import { textPosition } from '../../../helpers/util';
-import { User } from '../../user/user.interface';
+import { BotInfo, User } from '../../user/user.interface';
 import { UserService } from '../../user/user.service';
 import { ChatGPTResponse, ChatMessage } from '../bot.interface';
 import { BotService } from '../bot.service';
@@ -23,6 +23,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   userAvatar = '';
   user!: Partial<User>;
   settingVisible = false;
+  botInfo?: BotInfo;
 
   private inputFlag = false;
 
