@@ -1,7 +1,9 @@
 export interface ChatMessage {
+  id?: number;
   content: string;
   isRobot?: boolean;
   role?: 'user' | 'assistant';
+  voted?: boolean;
 }
 
 export interface ChatGPTParam {

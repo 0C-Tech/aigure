@@ -5,7 +5,11 @@
            [showClose]="true">
   <ng-template #modalTpl>
     <div class="modal-setting">
-      <app-setting [botId]="botId" [isPage]="false"></app-setting>
+      <app-setting
+        [botId]="botId"
+        [isPage]="false"
+        [(visible)]="visible"
+        (visibleChange)="changeVisible($event)"></app-setting>
     </div>
   </ng-template>
 </app-modal>

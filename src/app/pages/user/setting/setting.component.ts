@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
@@ -18,6 +18,8 @@ import { UserService } from '../user.service';
 export class SettingComponent extends PageComponent implements OnInit {
   @Input() isPage = true;
   @Input() botId: string | number = '';
+  @Input() visible = false;
+  @Output() visibleChange = new EventEmitter<boolean>();
 
   botInfo?: BotInfo;
   settingForm = this.fb.group({
@@ -61,7 +63,11 @@ export class SettingComponent extends PageComponent implements OnInit {
       }
       this.botService.saveBot(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
         if (res.success) {
-          this.router.navigate(['/bot/chat']);
+          if (this.isPage) {
+            this.router.navigate(['/bot/chat']);
+          } else {
+            this.visibleChange.emit(false);
+          }
         } else {
           this.message.error('保存失败');
         }

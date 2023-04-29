@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
   user!: Partial<User>;
   settingVisible = false;
   botInfo?: BotInfo;
+  botId?: string | number = '';
 
   private inputFlag = false;
 
@@ -62,6 +63,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     }
 
     this.messages.push({
+      id: Date.now(),
       isRobot: false,
       content: prompt
     });
@@ -71,6 +73,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     const resHandler = (res: ChatGPTResponse) => {
       (res.choices || []).forEach((msg) => {
         this.messages.push({
+          id: Date.now(),
           isRobot: true,
           content: msg.message.content.replace(/\r\n|\r|\n/gi, '<br/>')
         });
@@ -114,6 +117,23 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.settingVisible = true;
   }
 
+  changeSettingVisible(visible: boolean) {
+    !visible && this.getBotList();
+  }
+
+  voteMessage(message: ChatMessage, isLike: boolean) {
+    if (!message.id) {
+      return;
+    }
+    this.botService.voteMessage(message.id, isLike ? 'Like' : 'UnLike').pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      if (res.success) {
+        message.voted = true;
+      } else {
+        this.message.error('操作失败');
+      }
+    });
+  }
+
   protected scrollBottom() {
     const msgBoxEle = this.msgListEle.nativeElement;
     const { offsetHeight } = msgBoxEle;
@@ -125,7 +145,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   private getMessageList() {
     this.botService.getMessageList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      this.messages = res;
+      this.messages = res.map((msg) => {
+        msg.isRobot = msg.role === 'assistant';
+        msg.voted = true;
+        return msg;
+      });
     });
   }
 
@@ -135,6 +159,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
         const botList: BotInfo[] = res.data || [];
         if (botList.length > 0) {
           this.botInfo = botList[0];
+          this.botId = this.botInfo.id;
         } else {
           this.router.navigate(['/user/setting']);
         }

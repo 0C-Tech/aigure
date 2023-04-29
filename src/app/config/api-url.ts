@@ -11,5 +11,6 @@ export enum ApiUrl {
   SAVE_BOT = '/bot/save',
   GET_MESSAGE_LIST = '/chat/msgLogs',
   SEND_MESSAGE = '/chat/sendMsg',
-  SEND_MESSAGE_WITH_HISTORY = '/chat/sendMsgWithHistory'
+  SEND_MESSAGE_WITH_HISTORY = '/chat/sendMsgWithHistory',
+  VOTE_MESSAGE = '/chat/likeUnlike'
 }

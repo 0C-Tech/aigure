@@ -51,4 +51,13 @@ export class BotService {
       .httpGet(this.apiService.getApiUrl(ApiUrl.GET_MESSAGE_LIST))
       .pipe(map((res) => <any>(res?.data || [])));
   }
+
+  voteMessage(msgId: number, vote: 'Like' | 'UnLike' | 'Normal'): Observable<HttpResponseEntity> {
+    return this.apiService
+      .httpPost(this.apiService.getApiUrl(ApiUrl.VOTE_MESSAGE), {
+        messageId: msgId,
+        likeOrNot: vote
+      })
+      .pipe(map((res) => <any>(res || {})));
+  }
 }

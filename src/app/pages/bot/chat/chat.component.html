@@ -21,12 +21,12 @@
               <div class="message-user">{{botInfo?.displayName}}</div>
               <div class="message-content">
                 <div class="message-text" [innerHTML]="msg.content | safeHtml"></div>
-                <div class="message-actions">
+                <div class="message-actions" *ngIf="!msg.voted">
                   <div class="action-item">
-                    <div class="action-like"></div>
+                    <div class="action-like" (click)="voteMessage(msg, true)"></div>
                   </div>
                   <div class="action-item">
-                    <div class="action-dislike"></div>
+                    <div class="action-dislike" (click)="voteMessage(msg, false)"></div>
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
               <div class="message-user">{{user.email}}</div>
               <div class="message-content">
                 <div class="message-text">
-                  <pre><span>{{msg.content}}</span></pre>
+                  <div><span>{{msg.content}}</span></div>
                 </div>
               </div>
             </div>
@@ -59,4 +59,8 @@
     </div>
   </div>
 </div>
-<app-setting-modal [(visible)]="settingVisible" [botId]="botInfo?.id || ''"></app-setting-modal>
+<app-setting-modal
+  *ngIf="settingVisible"
+  [(visible)]="settingVisible"
+  (visibleChange)="changeSettingVisible($event)"
+  [botId]="botId || ''"></app-setting-modal>
