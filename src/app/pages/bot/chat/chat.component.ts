@@ -135,6 +135,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
         const botList: BotInfo[] = res.data || [];
         if (botList.length > 0) {
           this.botInfo = botList[0];
+        } else {
+          this.router.navigate(['/user/setting']);
         }
       } else {
         this.message.error('获取Bot信息失败');
