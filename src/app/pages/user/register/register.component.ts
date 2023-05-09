@@ -56,7 +56,7 @@ export class RegisterComponent extends PageComponent implements OnInit {
         email,
         password
       }).subscribe((res) => {
-        if (res) {
+        if (res.email) {
           this.login(email, password);
         }
       });

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, map, Observable, of } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, tap } from 'rxjs';
 import { MessageService } from '../components/message/message.service';
 import { ApiUrl } from '../config/api-url';
 import { Message } from '../config/message.enum';
@@ -35,7 +35,14 @@ export class ApiService {
         }),
         observe: 'body'
       })
-      .pipe(catchError(this.handleError<T>(disableMessage)));
+      .pipe(
+        tap((res) => {
+          if (res.code) {
+            throw new Error(res.code.toString());
+          }
+        }),
+        catchError(this.handleError<T>(disableMessage))
+      );
   }
 
   httpGetData<T extends HttpResponseEntity>(
@@ -59,18 +66,33 @@ export class ApiService {
   httpPost<T extends HttpResponseEntity>(
     url: string,
     body: Record<string, any> | FormData = {},
-    disableMessage = false
+    options: {
+      disableMessage?: boolean;
+      handleError?: boolean;
+    } = { disableMessage: false, handleError: true }
   ): Observable<T> {
+    const { disableMessage, handleError } = options;
     return this.http
       .post<T>(url, body, {
         observe: 'body'
       })
-      .pipe(catchError(this.handleError<T>(disableMessage)));
+      .pipe(
+        tap((res) => {
+          if (handleError && res.code) {
+            throw new Error(res.code.toString());
+          }
+        }),
+        catchError(this.handleError<T>(disableMessage || false))
+      );
   }
 
   private handleError<T>(disableMessage: boolean) {
     return (error: HttpErrorResponse): Observable<T> => {
       if (error.status !== HttpStatusCode.NotFound) {
+        if (error.message === '401') {
+          this.router.navigate(['/user/login']);
+          return of(error.error as T);
+        }
         if (!disableMessage) {
           this.message.error(error.error?.message || error.message || Message.UNKNOWN_ERROR);
         }

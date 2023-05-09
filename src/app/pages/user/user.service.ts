@@ -79,7 +79,9 @@ export class UserService {
 
   getUserInfo(): Observable<User> {
     return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER))
+      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER), {}, {
+        handleError: false
+      })
       .pipe(
         map((res) => <any>(res?.data || {})),
         tap((res) => {

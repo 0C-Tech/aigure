@@ -1,5 +1,5 @@
 export interface HttpResponseEntity {
-  code: number;
+  code: number | string;
   success?: boolean;
   message?: string;
   data?: any;
