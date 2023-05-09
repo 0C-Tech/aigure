@@ -20,7 +20,7 @@
             <div class="message-body">
               <div class="message-user">{{botInfo?.displayName}}</div>
               <div class="message-content">
-                <div class="message-text" [innerHTML]="msg.content | safeHtml"></div>
+                <div class="message-text" [class.loading]="msg.loading" [innerHTML]="msg.content | safeHtml"></div>
                 <div class="message-actions" *ngIf="!msg.voted">
                   <div class="action-item">
                     <div class="action-like" (click)="voteMessage(msg, true)"></div>
@@ -52,7 +52,7 @@
                  placeholder="Type something" />
           <div class="send-icon"
                [class.active]="!!prompt.trim()"
-               (click)="sendMessage()"></div>
+               (click)="sendStreamMessage()"></div>
         </div>
         <div class="user-avatar"><img [src]="userAvatar" alt="avatar" /></div>
       </div>

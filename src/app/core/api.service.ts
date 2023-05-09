@@ -19,6 +19,10 @@ export class ApiService {
     return `${this.apiUrlPrefix}${path}`;
   }
 
+  getToken(): string {
+    return localStorage.getItem('token') || '';
+  }
+
   httpGet<T extends HttpResponseEntity>(
     url: string,
     param: Record<string, any> = {},

@@ -1,8 +1,10 @@
 export interface ChatMessage {
   id?: number;
   content: string;
-  isRobot?: boolean;
+  html?: string;
   role?: 'user' | 'assistant';
+  isRobot?: boolean;
+  loading?: boolean;
   voted?: boolean;
 }
 
@@ -19,5 +21,18 @@ export interface ChatGPTResponse {
       role?: string;
       content: string;
     };
+    delta: {
+      content?: string;
+    };
   }[];
+  error: {
+    message: string;
+  }
+}
+
+export interface MessageBody {
+  type: 'message' | 'done' | 'error';
+  message?: string;
+  conversationId?: string;
+  error?: Error;
 }

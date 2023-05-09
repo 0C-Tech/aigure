@@ -12,5 +12,6 @@ export enum ApiUrl {
   GET_MESSAGE_LIST = '/chat/msgLogs',
   SEND_MESSAGE = '/chat/sendMsg',
   SEND_MESSAGE_WITH_HISTORY = '/chat/sendMsgWithHistory',
+  SEND_STREAM_MESSAGE = '/chat/stream',
   VOTE_MESSAGE = '/chat/likeUnlike'
 }

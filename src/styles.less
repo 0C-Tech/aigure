@@ -2,3 +2,28 @@
 @import "styles/reset";
 @import "styles/variables";
 @import "styles/icons";
+
+.message-text.loading {
+  > :not(ol):not(ul):not(pre):last-child:after,
+  > ol:last-child li:last-child:after,
+  > pre:last-child code:after,
+  > ul:last-child li:last-child:after {
+    -webkit-animation: blink 1s steps(5, start) infinite;
+    animation: blink 1s steps(5, start) infinite;
+    content: "▋";
+    margin-left: .25rem;
+    vertical-align: baseline
+  }
+}
+
+@-webkit-keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
