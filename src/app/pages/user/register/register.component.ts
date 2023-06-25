@@ -13,24 +13,27 @@ import { UserService } from '../user.service';
   providers: [DestroyService]
 })
 export class RegisterComponent extends PageComponent implements OnInit {
-  regForm = this.fb.group({
-    email: ['', [Validators.required, Validators.maxLength(100), Validators.email]],
-    password: [null, [Validators.required, Validators.maxLength(20)]],
-    repeatPassword: [null, [Validators.required, Validators.maxLength(20)]]
-  }, {
-    validators: [
-      (control: AbstractControl): ValidationErrors | null => {
-        const newPwd = control.get('password')?.value;
-        const confirmPwd = control.get('repeatPassword')?.value;
-        const result: ValidationErrors = { confirmPwd: {} };
-        if (confirmPwd !== newPwd) {
-          result['confirmPwd'].invalid = true;
-          return result;
+  regForm = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.maxLength(100), Validators.email]],
+      password: [null, [Validators.required, Validators.maxLength(20)]],
+      repeatPassword: [null, [Validators.required, Validators.maxLength(20)]]
+    },
+    {
+      validators: [
+        (control: AbstractControl): ValidationErrors | null => {
+          const newPwd = control.get('password')?.value;
+          const confirmPwd = control.get('repeatPassword')?.value;
+          const result: ValidationErrors = { confirmPwd: {} };
+          if (confirmPwd !== newPwd) {
+            result['confirmPwd'].invalid = true;
+            return result;
+          }
+          return null;
         }
-        return null;
-      }
-    ]
-  });
+      ]
+    }
+  );
 
   constructor(
     private destroy$: DestroyService,
@@ -52,14 +55,16 @@ export class RegisterComponent extends PageComponent implements OnInit {
     const { value, valid } = this.validateForm(this.regForm);
     if (valid) {
       const { email, password } = value;
-      this.userService.register({
-        email,
-        password
-      }).subscribe((res) => {
-        if (res.email) {
-          this.login(email, password);
-        }
-      });
+      this.userService
+        .register({
+          email,
+          password
+        })
+        .subscribe((res) => {
+          if (res.email) {
+            this.login(email, password);
+          }
+        });
     }
   }
 

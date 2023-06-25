@@ -27,7 +27,7 @@ export interface ChatGPTResponse {
   }[];
   error: {
     message: string;
-  }
+  };
 }
 
 export interface MessageBody {

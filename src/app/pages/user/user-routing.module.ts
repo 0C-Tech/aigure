@@ -15,11 +15,13 @@ const routes: Routes = [
   { path: 'congratulation', component: CongratulationComponent },
   {
     path: 'setting',
-    canActivate: [authGuard], component: SettingComponent
+    canActivate: [authGuard],
+    component: SettingComponent
   },
   {
     path: 'reset-password',
-    canActivate: [authGuard], component: ResetComponent
+    canActivate: [authGuard],
+    component: ResetComponent
   }
 ];
 

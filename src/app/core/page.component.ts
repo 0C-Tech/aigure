@@ -1,4 +1,3 @@
 import { BaseComponent } from './base.component';
 
-export abstract class PageComponent extends BaseComponent {
-}
+export abstract class PageComponent extends BaseComponent {}

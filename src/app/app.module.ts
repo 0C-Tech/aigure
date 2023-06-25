@@ -21,9 +21,7 @@ registerLocaleData(zh);
     FormsModule,
     BrowserAnimationsModule
   ],
-  providers: [
-    httpInterceptorProviders
-  ],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

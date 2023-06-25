@@ -61,32 +61,38 @@ export class SettingComponent extends PageComponent implements OnInit {
       if (this.botId) {
         payload['id'] = this.botId;
       }
-      this.botService.saveBot(payload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
-        if (res.success) {
-          if (this.isPage) {
-            this.router.navigate(['/bot/chat']);
+      this.botService
+        .saveBot(payload)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          if (res.success) {
+            if (this.isPage) {
+              this.router.navigate(['/bot/chat']);
+            } else {
+              this.visibleChange.emit(false);
+            }
           } else {
-            this.visibleChange.emit(false);
+            this.message.error('保存失败');
           }
-        } else {
-          this.message.error('保存失败');
-        }
-      });
+        });
     }
   }
 
   private getBotInfo() {
-    this.botService.getBotInfo(this.botId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      if (res.success) {
-        this.botInfo = res.data;
-        this.settingForm.setValue({
-          name: this.botInfo?.displayName || '',
-          greeting: this.botInfo?.greeting || '',
-          description: this.botInfo?.description || ''
-        });
-      } else {
-        this.message.error('获取Bot信息失败');
-      }
-    });
+    this.botService
+      .getBotInfo(this.botId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        if (res.success) {
+          this.botInfo = res.data;
+          this.settingForm.setValue({
+            name: this.botInfo?.displayName || '',
+            greeting: this.botInfo?.greeting || '',
+            description: this.botInfo?.description || ''
+          });
+        } else {
+          this.message.error('获取Bot信息失败');
+        }
+      });
   }
 }

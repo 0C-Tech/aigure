@@ -44,28 +44,28 @@ export class UserService {
     }
   }
 
-  logout() {
-  }
+  logout() {}
 
   register(user: Partial<User>): Observable<User> {
-    return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.REGISTER), user)
-      .pipe(
-        map((res) => <any>(res?.data || {})),
-        tap((res) => {
-          this.cacheUser(res);
-          if (res.id) {
-            this.loginUser.next(res);
-          }
-        })
-      );
+    return this.apiService.httpPost(this.apiService.getApiUrl(ApiUrl.REGISTER), user).pipe(
+      map((res) => <any>(res?.data || {})),
+      tap((res) => {
+        this.cacheUser(res);
+        if (res.id) {
+          this.loginUser.next(res);
+        }
+      })
+    );
   }
 
   cacheUser(user: Partial<User>) {
     if (user.email) {
-      localStorage.setItem('user', JSON.stringify({
-        email: user.email
-      }));
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          email: user.email
+        })
+      );
     }
   }
 
@@ -78,19 +78,15 @@ export class UserService {
   }
 
   getUserInfo(): Observable<User> {
-    return this.apiService
-      .httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER), {}, {
-        handleError: false
+    return this.apiService.httpPost(this.apiService.getApiUrl(ApiUrl.GET_USER), {}).pipe(
+      map((res) => <any>(res?.data || {})),
+      tap((res) => {
+        this.cacheUser(res);
+        if (res.email) {
+          this.loginUser.next(res);
+        }
       })
-      .pipe(
-        map((res) => <any>(res?.data || {})),
-        tap((res) => {
-          this.cacheUser(res);
-          if (res.email) {
-            this.loginUser.next(res);
-          }
-        })
-      );
+    );
   }
 
   saveUserInfo(user: Partial<User>): Observable<HttpResponseEntity> {

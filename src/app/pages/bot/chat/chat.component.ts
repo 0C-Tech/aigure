@@ -41,8 +41,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private botService: BotService,
     private apiService: ApiService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.user = this.userService.getCacheUser();
@@ -52,12 +51,20 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.promptInput.nativeElement.addEventListener('compositionstart', () => {
-      this.inputFlag = true;
-    }, false);
-    this.promptInput.nativeElement.addEventListener('compositionend', () => {
-      this.inputFlag = false;
-    }, false);
+    this.promptInput.nativeElement.addEventListener(
+      'compositionstart',
+      () => {
+        this.inputFlag = true;
+      },
+      false
+    );
+    this.promptInput.nativeElement.addEventListener(
+      'compositionend',
+      () => {
+        this.inputFlag = false;
+      },
+      false
+    );
   }
 
   sendMessage(withHistory = true) {
@@ -94,10 +101,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
         content: item.content,
         role: item.isRobot ? 'assistant' : 'user'
       }));
-      this.botService.sendMessageWithHistory({
-        messages,
-        model: 'gpt-3.5-turbo'
-      }).subscribe(resHandler);
+      this.botService
+        .sendMessageWithHistory({
+          messages,
+          model: 'gpt-3.5-turbo'
+        })
+        .subscribe(resHandler);
     }
   }
 
@@ -170,7 +179,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
         }
       },
       onerror: (err) => {
-        const errMsg = typeof err === 'string' ? err : (err?.message || 'Error occurred while generating.');
+        const errMsg = typeof err === 'string' ? err : err?.message || 'Error occurred while generating.';
         this.updateMessage({ type: 'error', message: errMsg });
         throw err;
       },
@@ -211,13 +220,16 @@ export class ChatComponent implements OnInit, AfterViewInit {
     if (!message.id) {
       return;
     }
-    this.botService.voteMessage(message.id, isLike ? 'Like' : 'UnLike').pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      if (res.success) {
-        message.voted = true;
-      } else {
-        this.message.error('操作失败');
-      }
-    });
+    this.botService
+      .voteMessage(message.id, isLike ? 'Like' : 'UnLike')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        if (res.success) {
+          message.voted = true;
+        } else {
+          this.message.error('操作失败');
+        }
+      });
   }
 
   protected scrollBottom() {
@@ -230,29 +242,35 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   private getMessageList() {
-    this.botService.getMessageList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      this.messages = res.map((msg) => {
-        msg.isRobot = msg.role === 'assistant';
-        msg.voted = true;
-        return msg;
+    this.botService
+      .getMessageList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.messages = res.map((msg) => {
+          msg.isRobot = msg.role === 'assistant';
+          msg.voted = true;
+          return msg;
+        });
       });
-    });
   }
 
   private getBotList() {
-    this.botService.getBotList().pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      if (res.success) {
-        const botList: BotInfo[] = res.data || [];
-        if (botList.length > 0) {
-          this.botInfo = botList[0];
-          this.botId = this.botInfo.id;
+    this.botService
+      .getBotList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        if (res.success) {
+          const botList: BotInfo[] = res.data || [];
+          if (botList.length > 0) {
+            this.botInfo = botList[0];
+            this.botId = this.botInfo.id;
+          } else {
+            this.router.navigate(['/user/setting']);
+          }
         } else {
-          this.router.navigate(['/user/setting']);
+          this.message.error('获取Bot信息失败');
         }
-      } else {
-        this.message.error('获取Bot信息失败');
-      }
-    });
+      });
   }
 
   private updateMessage(msg: MessageBody) {
@@ -276,5 +294,5 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   private parseMarkdown = (msg: string): string => {
     return marked.parse(msg);
-  }
+  };
 }

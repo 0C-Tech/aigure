@@ -14,23 +14,26 @@ import { UserService } from '../user.service';
   providers: [DestroyService]
 })
 export class ResetComponent extends PageComponent implements OnInit {
-  resetForm = this.fb.group({
-    password: [null, [Validators.required, Validators.maxLength(20)]],
-    repeatPassword: [null, [Validators.required, Validators.maxLength(20)]]
-  }, {
-    validators: [
-      (control: AbstractControl): ValidationErrors | null => {
-        const newPwd = control.get('password')?.value;
-        const confirmPwd = control.get('repeatPassword')?.value;
-        const result: ValidationErrors = { confirmPwd: {} };
-        if (confirmPwd !== newPwd) {
-          result['confirmPwd'].invalid = true;
-          return result;
+  resetForm = this.fb.group(
+    {
+      password: [null, [Validators.required, Validators.maxLength(20)]],
+      repeatPassword: [null, [Validators.required, Validators.maxLength(20)]]
+    },
+    {
+      validators: [
+        (control: AbstractControl): ValidationErrors | null => {
+          const newPwd = control.get('password')?.value;
+          const confirmPwd = control.get('repeatPassword')?.value;
+          const result: ValidationErrors = { confirmPwd: {} };
+          if (confirmPwd !== newPwd) {
+            result['confirmPwd'].invalid = true;
+            return result;
+          }
+          return null;
         }
-        return null;
-      }
-    ]
-  });
+      ]
+    }
+  );
 
   constructor(
     private destroy$: DestroyService,
@@ -64,16 +67,18 @@ export class ResetComponent extends PageComponent implements OnInit {
         this.message.error('用户不存在');
         return;
       }
-      this.userService.saveUserInfo({
-        id,
-        password
-      }).subscribe((res) => {
-        if (res.success) {
-          this.router.navigate(['../login'], { relativeTo: this.route });
-        } else {
-          this.message.error('保存失败');
-        }
-      });
+      this.userService
+        .saveUserInfo({
+          id,
+          password
+        })
+        .subscribe((res) => {
+          if (res.success) {
+            this.router.navigate(['../login'], { relativeTo: this.route });
+          } else {
+            this.message.error('保存失败');
+          }
+        });
     }
   }
 }
